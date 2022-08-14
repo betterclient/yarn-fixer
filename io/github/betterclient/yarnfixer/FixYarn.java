@@ -1,5 +1,6 @@
 package io.github.betterclient.yarnfixer;
 
+import java.awt.Desktop;
 import java.awt.FileDialog;
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,7 +110,9 @@ public class FixYarn {
 				}
 			}
 		}
-		System.out.println(fileOutput.getAbsolutePath());
+		Desktop desk = Desktop.getDesktop();
+		desk.open(fileOutput);
+
 		zout.close();
 		zip.close();
 		System.out.println("Success!");
@@ -126,9 +129,11 @@ public class FixYarn {
 		fd.setFilenameFilter((dir, name) -> name.endsWith(".zip"));
 		String filename = fd.getFile();
 		if (filename == null)
-		  return selectFile();
+		  System.exit(0);
 		else
 		  return fd.getDirectory() + fd.getFile();
+		
+		return null;
 	}
 
 	public static void putEntryData(ZipOutputStream zipout, InputStream data) throws Exception {
@@ -137,3 +142,4 @@ public class FixYarn {
 		zipout.closeEntry();
 	}
 }
+
