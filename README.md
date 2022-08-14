@@ -11,3 +11,10 @@ This Program Retrieves a .zip file containing yarn named that is decompiled with
 # Building
 Get jdk 1.9+ and build it like any other project
 
+# Removes Lines
+
+@Environment(EnvType.CLIENT)
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
+/*      */
+/* linenumber */
