@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 public class YarnFixer {
 
+	public static PercentageShover p = new PercentageShover();
+	
 	public static void main(String[] args) throws Exception {
 		String s = selectFile();
 		if(s.endsWith(".jar")) {

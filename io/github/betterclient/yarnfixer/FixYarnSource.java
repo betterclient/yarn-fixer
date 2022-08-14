@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
@@ -29,6 +30,8 @@ public class FixYarnSource {
 		File f = new File(args[0]);
 		ZipFile zip = new ZipFile(f);
 		Enumeration<? extends ZipEntry> ze = zip.entries();
+		int allclasses = 0;
+		for (Iterator<? extends ZipEntry> iterator = zip.entries().asIterator(); iterator.hasNext();) { if(!iterator.next().isDirectory()) allclasses++; }
 		
 		String nahhh = f.getParent();
 		File file = new File(nahhh);
@@ -39,11 +42,20 @@ public class FixYarnSource {
 		int indexjavaFile = 0;
 		int indexdir = 0;
 		int indexnonjava = 0;
+		int indexTotal = 0;
+		int percentage = 0;
 		while (ze.hasMoreElements()) {
+			indexTotal++;
+			percentage = ((100 * indexTotal) / allclasses) - 1;
+			PercentageShover.progressBar.setValue(percentage);
 			ZipEntry entry = (ZipEntry) ze.nextElement();
 			
 			if(entry.getName().endsWith(change)) {
 				indexjavaFile++;
+				if(indexjavaFile % 10 == 0) {
+					String fileLastName = entry.getName().substring(entry.getName().lastIndexOf("/") + 1, entry.getName().length());
+					PercentageShover.lbl.setText(PercentageShover.lbltextNormal + fileLastName);
+				}
 				Scanner scanner = new Scanner(zip.getInputStream(entry));
 				String entryy = "";
 				
@@ -100,6 +112,10 @@ public class FixYarnSource {
 					zout.closeEntry();
 				}else {
 					indexnonjava++;
+					if(indexnonjava % 50 == 0) {
+						String fileLastName = entry.getName().substring(entry.getName().lastIndexOf("/") + 1, entry.getName().length());
+						PercentageShover.lbl.setText(PercentageShover.lbltextNormal + fileLastName);
+					}
 					if(indexnonjava % 100 == 0) {
 						System.out.println("Created " + indexnonjava + " non .java files. " + indexnonjava + "th file was " + entry.getName());
 					}
@@ -109,6 +125,8 @@ public class FixYarnSource {
 				}
 			}
 		}
+		YarnFixer.p.setVisible(false);
+		
 		Desktop desk = Desktop.getDesktop();
 		desk.open(fileOutput);
 
