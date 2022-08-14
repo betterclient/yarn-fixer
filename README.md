@@ -1,5 +1,7 @@
 # Yarn Fixer
 
+## Made for people who wants to use yarn mappings for a minecraft client
+
 When you use yarn to get named mappings and decompile them with jd-gui it creates non wanted lines. For Example:
 @Environment(EnvType.CLIENT) //Created By Yarn
 /*      */  //Created by jd-gui
