@@ -1,4 +1,4 @@
-package io.github.betterclient.yarnFixer;
+package io.github.betterclient.yarnfixer;
 
 import java.awt.Desktop;
 import java.io.File;
