@@ -1,5 +1,7 @@
 # Yarn Fixer
 
+# sorry for the shitcode this projext is old
+
 ## Made for people who wants to use yarn mappings for a minecraft client
 
 ## Can Now Also Remove @Enviorment(EnvType.CLIENT) without needing source code
